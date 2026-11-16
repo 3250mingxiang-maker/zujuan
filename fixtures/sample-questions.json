@@ -1,0 +1,70 @@
+[
+  {
+    "id": "36527119",
+    "bankId": "11",
+    "type": "单选题",
+    "difficulty": "适中",
+    "difficultyScore": 0.62,
+    "knowledge": ["动量守恒定律", "弹性碰撞", "v-t 图像"],
+    "source": "26-27高二上·宁夏石嘴山·期中",
+    "stemHtml": "<p>如图甲所示，质量 <em>m</em><sub>1</sub> = 2&nbsp;kg 的小球 A 以 <em>v</em><sub>0</sub> = 6&nbsp;m/s 的速度在光滑水平面上向右运动，与静止的质量 <em>m</em><sub>2</sub> = 4&nbsp;kg 的小球 B 发生正碰。碰后两球的 <em>v</em>-<em>t</em> 图像如图乙所示（取向右为正方向）。下列说法正确的是（　　）</p><p><img src=\"https://img.zujuan.xkw.com/pic/2026/11/36527119_a.png\" alt=\"图甲\"><img src=\"https://img.zujuan.xkw.com/pic/2026/11/36527119_b.png\" alt=\"图乙\"></p>",
+    "stemText": "如图甲所示，质量 m1 = 2 kg 的小球 A 以 v0 = 6 m/s 的速度在光滑水平面上向右运动，与静止的质量 m2 = 4 kg 的小球 B 发生正碰。碰后两球的 v-t 图像如图乙所示（取向右为正方向）。下列说法正确的是（　　）",
+    "options": [
+      { "label": "A", "html": "碰后 A 球的速度大小为 2&nbsp;m/s，方向向右" },
+      { "label": "B", "html": "碰后 B 球的速度大小为 2&nbsp;m/s，方向向右" },
+      { "label": "C", "html": "该碰撞过程中系统损失的机械能为 12&nbsp;J" },
+      { "label": "D", "html": "若碰后 A 球的速度图像如图丙所示，则碰撞可能为完全非弹性碰撞<img src=\"https://img.zujuan.xkw.com/pic/2026/11/36527119_c.png\" alt=\"图丙\">" }
+    ],
+    "answerHtml": "B",
+    "answerText": "B",
+    "analysisHtml": "<p>取向右为正方向。由动量守恒定律得 <em>m</em><sub>1</sub><em>v</em><sub>0</sub> = <em>m</em><sub>1</sub><em>v</em><sub>1</sub> + <em>m</em><sub>2</sub><em>v</em><sub>2</sub>，即 2×6 = 2<em>v</em><sub>1</sub> + 4<em>v</em><sub>2</sub>。</p><p>由图乙读出碰后 A 球速度 <em>v</em><sub>1</sub> = −2&nbsp;m/s（方向向左），代入得 <em>v</em><sub>2</sub> = 3.5&nbsp;m/s，故 A、B 两项均错。</p><p>碰撞前总动能 <em>E</em><sub>k</sub> = ½×2×6<sup>2</sup> = 36&nbsp;J；碰撞后总动能 <em>E</em><sub>k</sub>′ = ½×2×2<sup>2</sup> + ½×4×3.5<sup>2</sup> = 4 + 24.5 = 28.5&nbsp;J，损失 7.5&nbsp;J，C 错。</p><p>若 A 球碰后速度为 2&nbsp;m/s 且与 B 同向，则 2×6 = 2×2 + 4<em>v</em><sub>2</sub>，得 <em>v</em><sub>2</sub> = 2&nbsp;m/s，两球速度相同，为完全非弹性碰撞，D 中情形确实可能，但题干所问选项中只有 B 的速度表述与图乙一致（<em>v</em><sub>2</sub> = 2&nbsp;m/s 系由图丙读出的近似值），故选 B。</p>",
+    "analysisText": "取向右为正方向，由动量守恒定律得 m1v0 = m1v1 + m2v2。碰后 A 球速度 v1 = −2 m/s，代入得 v2 = 3.5 m/s。碰撞前总动能 36 J，碰后总动能 28.5 J，损失 7.5 J。故选 B。",
+    "url": "https://zujuan.xkw.com/11q36527119.html",
+    "images": [
+      "https://img.zujuan.xkw.com/pic/2026/11/36527119_a.png",
+      "https://img.zujuan.xkw.com/pic/2026/11/36527119_b.png",
+      "https://img.zujuan.xkw.com/pic/2026/11/36527119_c.png"
+    ]
+  },
+  {
+    "id": "36527388",
+    "bankId": "11",
+    "type": "多选题",
+    "difficulty": "困难",
+    "difficultyScore": 0.81,
+    "knowledge": ["法拉第电磁感应定律", "楞次定律", "右手定则", "安培力"],
+    "source": "26-27高二上·山东济南·期末",
+    "stemHtml": "<p>如图，两根足够长的平行光滑金属导轨固定在水平面内，间距 <em>L</em> = 0.5&nbsp;m，导轨左端接有阻值 <em>R</em> = 0.4&nbsp;Ω 的定值电阻，导轨电阻不计。匀强磁场竖直向下，磁感应强度 <em>B</em> = 2&nbsp;T。一根质量 <em>m</em> = 0.1&nbsp;kg、电阻 <em>r</em> = 0.1&nbsp;Ω 的金属棒垂直于导轨放置，与导轨接触良好。现给棒一个水平向右的初速度 <em>v</em><sub>0</sub> = 4&nbsp;m/s，棒运动过程中始终与导轨垂直。下列说法正确的是（　　）</p><p><img src=\"https://img.zujuan.xkw.com/pic/2026/11/36527388_1.png\" alt=\"导轨与金属棒\"></p>",
+    "stemText": "两根足够长的平行光滑金属导轨固定在水平面内，间距 L = 0.5 m，导轨左端接有阻值 R = 0.4 Ω 的定值电阻。匀强磁场竖直向下，磁感应强度 B = 2 T。一根质量 m = 0.1 kg、电阻 r = 0.1 Ω 的金属棒垂直于导轨放置。现给棒一个水平向右的初速度 v0 = 4 m/s。下列说法正确的是（　　）",
+    "options": [
+      { "label": "A", "html": "棒刚开始运动时，回路中的感应电动势为 4&nbsp;V" },
+      { "label": "B", "html": "棒刚开始运动时，棒两端的电压为 3.2&nbsp;V" },
+      { "label": "C", "html": "整个过程中回路产生的焦耳热为 0.8&nbsp;J" },
+      { "label": "D", "html": "棒最终停止运动，电阻 <em>R</em> 上通过的电荷量为 1.6&nbsp;C" }
+    ],
+    "answerHtml": "ABC",
+    "answerText": "ABC",
+    "analysisHtml": "<p>A 项：<em>E</em> = <em>BLv</em><sub>0</sub> = 2×0.5×4&nbsp;V = 4&nbsp;V，正确。</p><p>B 项：棒两端电压即路端电压 <em>U</em> = <em>E</em><em>R</em>/(<em>R</em>+<em>r</em>) = 4×0.4/0.5&nbsp;V = 3.2&nbsp;V，正确。</p><p>C 项：由能量守恒，全部动能转化为焦耳热，<em>Q</em> = ½<em>mv</em><sub>0</sub><sup>2</sup> = ½×0.1×4<sup>2</sup> = 0.8&nbsp;J，正确。</p><p>D 项：<em>q</em> = <em>I</em>Δt = Δ<em>Φ</em>/(<em>R</em>+<em>r</em>) = <em>B</em><em>L</em><em>x</em>/(<em>R</em>+<em>r</em>)，其中 <em>x</em> 由 <em>mv</em><sub>0</sub> = <em>B</em><sup>2</sup><em>L</em><sup>2</sup><em>x</em>/(<em>R</em>+<em>r</em>) 得 <em>x</em> = 4&nbsp;m，则 <em>q</em> = 2×0.5×4/0.5&nbsp;C = 8&nbsp;C，D 错。</p>",
+    "analysisText": "E = BLv0 = 4 V；U = ER/(R+r) = 3.2 V；Q = ½mv0² = 0.8 J；q = BLx/(R+r) = 8 C，故 D 错，答案为 ABC。",
+    "url": "https://zujuan.xkw.com/11q36527388.html",
+    "images": ["https://img.zujuan.xkw.com/pic/2026/11/36527388_1.png"]
+  },
+  {
+    "id": "36528016",
+    "bankId": "11",
+    "type": "解答题-问答题",
+    "difficulty": "适中",
+    "difficultyScore": 0.66,
+    "knowledge": ["带电粒子在匀强磁场中的运动", "牛顿第二定律", "圆周运动"],
+    "source": "26-27高二上·江苏南京·月考",
+    "stemHtml": "<p>如图所示，在平面直角坐标系 <em>xOy</em> 的第一象限内存在垂直纸面向里的匀强磁场，磁感应强度大小为 <em>B</em> = 0.5&nbsp;T，磁场边界为 <em>x</em> 轴与 <em>y</em> 轴。一质量 <em>m</em> = 1.0×10<sup>−26</sup>&nbsp;kg、电荷量 <em>q</em> = +2.0×10<sup>−18</sup>&nbsp;C 的粒子，从坐标原点 O 沿与 <em>x</em> 轴正方向成 30° 角的方向射入磁场，速度大小 <em>v</em> = 1.0×10<sup>6</sup>&nbsp;m/s。不计粒子重力。</p><p>（1）求粒子做圆周运动的半径 <em>r</em> 与周期 <em>T</em>；</p><p>（2）求粒子第一次离开磁场时射出点的坐标；</p><p>（3）若在 <em>y</em> 轴上放置一块足够长的荧光屏，求粒子打在荧光屏上的位置到 O 点的距离。</p><p><img src=\"https://img.zujuan.xkw.com/pic/2026/11/36528016_1.png\" alt=\"粒子运动轨迹示意图\"></p>",
+    "stemText": "在平面直角坐标系 xOy 的第一象限内存在垂直纸面向里的匀强磁场，磁感应强度 B = 0.5 T。一质量 m = 1.0×10^-26 kg、电荷量 q = +2.0×10^-18 C 的粒子，从原点 O 沿与 x 轴正方向成 30° 角的方向射入磁场，速度 v = 1.0×10^6 m/s。不计粒子重力。（1）求半径 r 与周期 T；（2）求粒子第一次离开磁场时射出点的坐标；（3）若在 y 轴上放置荧光屏，求粒子打在屏上的位置到 O 点的距离。",
+    "options": [],
+    "answerHtml": "<p>（1）<em>r</em> = <em>mv</em>/(<em>qB</em>) = 1.0×10<sup>−26</sup>×1.0×10<sup>6</sup>/(2.0×10<sup>−18</sup>×0.5)&nbsp;m = 0.01&nbsp;m；<em>T</em> = 2π<em>m</em>/(<em>qB</em>) = 2π×10<sup>−8</sup>&nbsp;s ≈ 6.3×10<sup>−8</sup>&nbsp;s。</p><p>（2）粒子沿逆时针方向偏转，圆心在入射速度的垂线上，圆心坐标 (0.01&nbsp;m, 0)。粒子转过 300° 后从 <em>x</em> 轴上的点 (0.01&nbsp;m, 0) 处离开磁场（与圆心重合处不合物理，实际出射点为 <em>x</em> = 0.01&nbsp;m 的 <em>x</em> 轴上一点）。</p><p>（3）荧光屏在 <em>y</em> 轴上，粒子轨迹与 <em>y</em> 轴相交于 <em>y</em> = 0.01&nbsp;m 处，故距离为 0.01&nbsp;m。</p>",
+    "answerText": "（1）r = mv/(qB) = 0.01 m，T = 2πm/(qB) ≈ 6.3×10^-8 s。（2）粒子逆时针偏转，第一次离开磁场的出射点在 x 轴正半轴上，坐标为 (0.01 m, 0)。（3）轨迹与 y 轴交于 y = 0.01 m 处，粒子打在荧光屏上到 O 点距离为 0.01 m。",
+    "analysisHtml": "<p>带电粒子在匀强磁场中做匀速圆周运动，洛伦兹力提供向心力：<em>qvB</em> = <em>mv</em><sup>2</sup>/<em>r</em>。</p><p>由左手定则判断，正电荷沿 30° 方向射入、磁场垂直纸面向里，洛伦兹力指向左上方，粒子做逆时针圆周运动，几何关系需画图确定圆心与出射点。</p><p>（3）中屏在 <em>y</em> 轴上，取轨迹与 <em>y</em> 轴的交点，即可得距离；注意若轨迹与屏只相切，则需用勾股关系求切点。</p>",
+    "analysisText": "洛伦兹力提供向心力 qvB = mv²/r；由左手定则判断偏转方向为逆时针；第三问取轨迹与 y 轴交点即得距离。",
+    "url": "https://zujuan.xkw.com/11q36528016.html",
+    "images": ["https://img.zujuan.xkw.com/pic/2026/11/36528016_1.png"]
+  }
+]

@@ -1,0 +1,13 @@
+# 忽略：运行期产物、浏览器 profile、样本导出、临时脚本
+node_modules/
+.smoke-data/
+.shot-profile/
+out/
+papers/
+.zujuan-test/
+*.corrupt
+*.log
+.DS_Store
+Thumbs.db
+chrome-profile/
+*.pdf.tmp

@@ -1,0 +1,42 @@
+{
+  "name": "@local/zujuan-tiku",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "description": "组卷网（zujuan.xkw.com）选题插件：扫码登录、按知识点/关键词/真卷仿卷选题、抓答案解析、自动过阿里云滑块、导出教师版/学生版讲义（HTML/PDF/Word/Markdown）",
+  "keywords": ["dsh-plugin", "zujuan", "xkw", "物理", "组卷", "讲义", "education", "physics"],
+  "license": "MIT",
+  "author": "mingxiang",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/3250mingxiang-maker/zujuan.git"
+  },
+  "homepage": "https://github.com/3250mingxiang-maker/zujuan",
+  "engines": {
+    "node": ">=22"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "lib/*.mjs",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md"
+  ],
+  "scripts": {
+    "smoke": "node dev/smoke.mjs",
+    "selftest": "node lib/render.mjs --selftest",
+    "slider": "node dev/slider-solve.mjs 2",
+    "state": "node dev/state-probe.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
