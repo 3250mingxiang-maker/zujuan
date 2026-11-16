@@ -145,7 +145,17 @@ export async function apply(ctx, config) {
   })()
 
   async function ensureSite() {
-    if (state.site && state.browser?.alive()) return state.site
+    if (state.site && state.browser?.alive()) {
+      // 假活检测：Chrome 进程在、CDP 却卡死（页面被冻结/假死）时，直接重启浏览器比干等强
+      const ok = await state.browser.ping({ timeoutMs: 4000 }).catch(() => false)
+      if (ok) return state.site
+      logger.info?.('zujuan: CDP 无响应，重启浏览器')
+      try {
+        state.browser.close()
+      } catch {}
+      state.browser = null
+      state.site = null
+    }
     if (state.launching) return state.launching
     state.launching = (async () => {
       if (conf.chromePath) process.env.ZUJUAN_CHROME = conf.chromePath
