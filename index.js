@@ -1171,7 +1171,9 @@ export async function apply(ctx, config) {
         res.unappliedFilters?.length ? `⚠ 未生效筛选：${res.unappliedFilters.join('、')}` : '',
         res.pages?.length > 1 ? `抓取页：${res.pages.map((p) => `p${p.page}(${p.count})`).join(' ')}` : '',
         res.viaFetch ? '（页面内 fetch 检索，未整页导航）' : '',
-        res.scoped ? '' : '⚠ 没指定知识点/章节/关键词，抓的是全科题库',
+        res.scoped || args.knowledgeId || args.chapterId || args.keyword || (args.knowledgeIds || []).length
+          ? ''
+          : '⚠ 没指定知识点/章节/关键词，抓的是全科题库',
         `页面：${res.url}`,
         '',
         ...lines,
