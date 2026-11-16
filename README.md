@@ -63,7 +63,9 @@ zujuan_paper({
 - 自动没过才把窗口给你（`zujuan_captcha({human:true})`），你拖一下；
 - 其余（找题、翻页、读题、下载答案图、排版出 PDF/Word）全自动。
 
-浏览器默认**有界面**（`headless: false`）：实测无窗口会被直接判成"阻断页面"，滑块也拖不动（页面没焦点时内核会丢弃 mousePressed）。窗口只是存在，不需要你操作。
+浏览器默认**有界面但窗口在屏幕外**（`headless: false` + `hideWindow: true`，启动参数 `--window-position=-32000,-32000`，连上 CDP 后再用 `Browser.setWindowBounds` 确认挪走）：既不像无窗口那样被判"阻断页面"，也不会在你桌面上闪窗。只有两件事会把窗口挪回屏幕内——**扫码登录**、**撞滑块要拖那一下**（拖完自动挪走）。`--disable-session-crashed-bubble / --hide-crash-restore-bubble / --disable-search-engine-choice-screen` 等参数把 Chrome 自己的各种首启弹窗也压掉了。
+
+为什么不用 headless：无窗口会被直接判"阻断页面"；而且窗口被遮挡/移出屏幕时渲染会被节流，滑块轨迹会发涩（实测屏幕外拖 3 次全被判 `F001`，挪回屏幕内第 2 次就过）。
 
 ---
 
@@ -229,6 +231,8 @@ zujuan_paper({
 | 插件重载后旧 Chrome 还占着 profile，新实例起不来 | `launch({reuse:true})` 先尝试接管在跑的实例；关闭时先发 `Browser.close` 再兜底强杀 |
 | Chrome 一直挂着吃 ~650MB | 空闲 3 分钟自动关闭（`idleCloseMs` 可调），下次调用自动拉起 |
 | **无窗口（headless）直接被判"阻断页面"** | 默认 `headless:false`；`zujuan_status` 里会标出当前模式 |
+| **开有界面窗口会弹在桌面上打扰人** | 窗口启动即在屏幕外（`--window-position` + `Browser.setWindowBounds` 双保险），只有扫码登录和拖滑块时才临时挪回屏幕内，用完挪走；顺带压掉 Chrome 的首启/崩溃恢复/搜索引擎选择弹窗 |
+| **屏幕外的窗口渲染被节流，滑块轨迹发涩 → 被判 F001** | 拖滑块那一步先把窗口挪回屏幕内（`showWindow()`），拖完 `hideWindow()`；实测屏幕外连拖 3 次全失败、挪回屏幕内第 2 次就过 |
 | **窗口没焦点时内核丢弃 mousePressed**，滑块的 press 到不了页面 → 怎么拖都不动 | `Emulation.setFocusEmulationEnabled` + 必要时点一下空白处；按下后先验"填充条是否 >0"，没生效就松手重按（最多 3 次） |
 | **每次 `dispatchMouseEvent` 等回执要 ~70ms**，67 帧拖成 6.4 秒（慢到不像人） | 改"有序不限速派发"（WebSocket 保序），拖拽时长由排好的节奏决定，约 0.9~1.3 秒 |
 | **自动过了却还是被拦** | 通过后误以为要重新导航 → 其实是 WAF 自己把页面回跳；改成等它自己回去，不再 `goto` |
@@ -293,7 +297,8 @@ MIT。仅供个人备课/教学研究使用，抓取节奏请自行控制，别�
 ```yaml
 - id: zujuan-tiku
   config:
-    headless: false          # 必须是 false：无窗口会被判"阻断页面"，滑块也拖不动
+    headless: false          # 必须是 false：无窗口会被判"阻断页面"
+    hideWindow: true         # 有界面但窗口放屏幕外；只在扫码/拖滑块时临时挪回来
     dataDir: ''              # 默认 ~/.dsh/zujuan
     paceMs: 2200             # 每次导航之间的间隔，防滑块
     subject: 高中物理         # 默认学科

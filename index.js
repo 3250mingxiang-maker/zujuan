@@ -21,6 +21,7 @@ export const inject = ['tools']
 
 const DEFAULTS = {
   headless: false, // 实测：headless 会被判"阻断页面"，必须要有界面
+  hideWindow: true, // 有界面但窗口放屏幕外，不弹窗打扰；扫码登录/人工拖滑块时才挪回来
   chromePath: '',
   chromeProfile: '',
   dataDir: '',
@@ -148,7 +149,12 @@ export async function apply(ctx, config) {
     if (state.launching) return state.launching
     state.launching = (async () => {
       if (conf.chromePath) process.env.ZUJUAN_CHROME = conf.chromePath
-      const browser = new Browser({ userDataDir: profileDir, headless: conf.headless })
+      const browser = new Browser({
+        userDataDir: profileDir,
+        headless: conf.headless,
+        // 有界面但放到屏幕外：既不像 headless 那样被判"阻断页面"，又不会在你桌面上闪窗
+        offscreen: conf.hideWindow !== false,
+      })
       await browser.launch()
       state.browser = browser
       state.site = new ZujuanSite(browser, {
@@ -156,6 +162,7 @@ export async function apply(ctx, config) {
         cacheDir: dataDir,
         useFetch: conf.searchViaFetch !== false,
         autoCaptcha: conf.autoCaptcha !== false,
+        hideWindow: conf.hideWindow !== false,
         log: (...a) => logger.info?.(...a),
       })
       return state.site
@@ -831,7 +838,7 @@ export async function apply(ctx, config) {
         login.group?.name ? `账号：${login.group.name}（可看答案 ${login.group.canViewAnswer}／可看解析 ${login.group.canViewAnalysis}）` : '',
         `本地题库：${stats.total} 题（含答案 ${stats.withAnswer}）`,
         `今日：题干 ${usage.questionsFetched} 道，答案解析 ${usage.answers}/30 道`,
-        `浏览器模式：${conf.headless ? '无窗口（易被拦）' : '有界面'}`,
+        `浏览器模式：${conf.headless ? '无窗口（易被拦）' : conf.hideWindow === false ? '有界面（窗口可见）' : '有界面 · 窗口在屏幕外（不打扰）'}`,
         `滑块：${conf.autoCaptcha === false ? '自动通过已关闭' : `自动通过已开（最多 ${conf.captchaAttempts || 3} 次）`}`,
         `数据目录：${dataDir}`,
         ...warnings.map((w) => `提示：${w}`),
@@ -860,12 +867,15 @@ export async function apply(ctx, config) {
       const qrFile = path.join(loginDir, 'login-qr.png')
       const before = await site.loginState().catch(() => null)
       if (before?.loggedIn) return ok({ summary: `已经登录（${before.userName || ''}），无需重复登录。`, loggedIn: true })
+      // 登录是"你亲自要做"的事：这时才把窗口从屏幕外挪回来（平时它一直待在屏幕外）
+      await site.browser.showWindow().catch(() => {})
       const opened = await site.openLogin({
         shotPath: qrFile,
         password: args.mode === 'password' && args.username ? { username: args.username, password: args.password || '' } : null,
       })
       const waitMs = Math.max(10, Math.min(600, Number(args.waitSeconds) || 150)) * 1000
       const done = await site.waitLogin({ timeoutMs: waitMs })
+      if (done.loggedIn && conf.hideWindow !== false) await site.browser.hideWindow().catch(() => {})
       const summary = done.loggedIn
         ? '登录成功，可以开始选题了。'
         : [
@@ -927,7 +937,7 @@ export async function apply(ctx, config) {
           state.browser = null
           state.site = null
           if (conf.chromePath) process.env.ZUJUAN_CHROME = conf.chromePath
-          const fresh = new Browser({ userDataDir: profileDir, headless: false })
+          const fresh = new Browser({ userDataDir: profileDir, headless: false, offscreen: false })
           await fresh.launch({ url: 'https://zujuan.xkw.com/gzwl/', attach: false })
           state.browser = fresh
         }
