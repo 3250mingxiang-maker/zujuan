@@ -1,54 +1,8 @@
-# zujuan · 组卷网选题插件（DSH）
+# 组卷网选题插件（@local/zujuan-tiku）
 
-把 [组卷网](https://zujuan.xkw.com/) 变成 DSH 的一个能力：**登录 → 按知识点/关键词/真卷仿卷选题 → 抓题干与答案解析 → 自动过阿里云滑块 → 一键导出教师版/学生版讲义**。
+把 [组卷网](https://zujuan.xkw.com/) 变成 DSH 的一个能力：**登录 → 按知识点/关键词找真题 → 抓题干与答案解析 → 一键导出教师版/学生版讲义**。
 
 给家教备课用：一次装好，之后每次只要说"帮我找 10 道动量守恒的题，中等难度，导出讲义"，剩下全自动。
-也可以直接说"仿 2025 年 1 月浙江首考物理卷出一份平行卷"——见 [示例](#示例浙江-2025-首考物理平行卷)。
-
-## 安装（DSH 插件）
-
-```bash
-git clone https://github.com/3250mingxiang-maker/zujuan.git
-```
-
-在 DSH profile 的 `cordis.patch.yml` 里加一行（`name` 指向 clone 下来的目录）：
-
-```yaml
-- insert:
-    - id: zujuan-tiku
-      name: '@local/zujuan-tiku'
-      config: {}          # 见文末「配置项」
-```
-
-放好后重启 DSH，`zujuan_status` 能调用就装好了。首次用 `zujuan_login` 扫码，之后长期免登录。
-
-零运行时依赖：不需要 puppeteer/playwright，只要本机有 Chrome/Edge（Node ≥ 22，用内置 WebSocket 直连 CDP）。
-
-### 示例：浙江 2025 首考物理·平行卷
-
-真卷结构从组卷网试卷页读（`zujuan_paper_outline`），再用 20 道真题的题号做种出平行卷：
-
-```js
-// 1) 读真卷结构（1 次请求）
-zujuan_paper_outline({ url: "/13p2438857.html" })
-// → 单选 10 / 多选 3 / 实验 3 / 解答 4，共 20 题，附逐题考点
-
-// 2) 抓 20 道真题的考点（不入答案，不耗额度）
-zujuan_question({ ids: ["25983884", ..., "25983903"], withAnswer: false })
-
-// 3) 逐题找同考点平行题 + 复刻分值结构（20~24 次站点请求）
-zujuan_paper({
-  title: "浙江 2025 首考物理·平行卷",
-  blueprintCount: 20,
-  blueprintSeedIds: ["25983884", ..., "25983903"],
-  blueprintScoreSequence: "3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,6,8,10,12,14",
-  blueprintGrade: "高三",
-  allowPartial: true,
-})
-```
-
-产出见 [`examples/浙江2025首考平行卷/`](examples/浙江2025首考平行卷)（教师版/学生版 Markdown + 学生版 HTML + manifest）。
-实测：**20 题 / 单选 10·多选 3·实验 3·解答 4 / 满分 100 / 估时 96 分钟 / 考点对齐 16·20**；3 处考点池里没有该题型，按"题型是硬约束"从同题型补并在报告里标明。
 
 ---
 
@@ -250,8 +204,8 @@ zujuan_paper({
 ## 目录结构
 
 ```
-zujuan/
-├── index.js              # DSH 插件入口：16 个工具的定义与编排
+zujuan-plugin/
+├── index.js              # Cordis 插件入口：16 个工具的定义与编排
 ├── cordis.patch.yml      # Loader 补丁（insert 一行）
 ├── lib/
 │   ├── cdp.mjs           # 零依赖 Chrome 驱动：启动、导航、求值、可信鼠标事件、截图、下载、打印 PDF
@@ -259,30 +213,12 @@ zujuan/
 │   ├── site.mjs          # 站点层：登录、列表 URL 语法、卡片解析、详情解析、答案展开、撞验证自动恢复
 │   ├── render.mjs        # 排版层：教师版/学生版 HTML、Word、Markdown
 │   └── store.mjs         # 本地题库：JSON 持久化、去重、标签、检索
-├── dev/                  # 开发期脚本（自测 / 滑块联调 / 现状体检），不参与运行
-├── docs/                 # 阿里云滑块实测方案、真卷平行卷参数
-├── examples/             # 已产出的平行卷（Markdown/HTML/manifest）
+├── dev/                  # 开发期脚本（recon/slider-lab/smoke/preview），不参与运行
 └── fixtures/             # 3 道样例题，用于离线自测
 ```
 
-自测：`npm run smoke`（假 ctx 跑全部工具，含 PDF 生成，43 项断言）、`npm run selftest`（排版 41 项断言）。
-
-滑块联调：
-- `npm run slider` → `dev/slider-solve.mjs 2`：真站点拖两次，逐帧打印轨迹与判定；
-- `node dev/e2e-blocked.mjs`：从"每个页面都被拦"的状态验证插件自恢复（过验证 → 自回跳 → 出题）；
-- `node dev/slider-lab.mjs`：连点逼出验证页，抓 `VerifyCaptchaV2` 回包与页面事件统计；
-- `node dev/slider-verify-probe.mjs`：抓服务端判定依据（`VerifyCode=F001` 之类）；
-- `node dev/profile-clean.mjs`：单独洗风控 Cookie（等价 `zujuan_profile({action:"clean"})`）；
-- `npm run state` → `dev/state-probe.mjs`：一行看当前 profile 是"正常/阻断/验证/未登录"。
-
-实现细节与踩坑记录见 [`docs/阿里云滑块-实测方案.md`](docs/阿里云滑块-实测方案.md)。
-
----
-
-## 许可
-
-MIT。仅供个人备课/教学研究使用，抓取节奏请自行控制，别给站点添麻烦。
-
+自测：`node dev/smoke.mjs`（假 ctx 跑全部工具，含 PDF 生成，43 项断言）与 `node lib/render.mjs --selftest`（排版 41 项断言）。
+滑块联调：`node dev/slider-solve.mjs 2`（真站点，有界面）、`node dev/e2e-blocked.mjs`（被拦状态下验插件自恢复）、`node dev/slider-lab.mjs`（逼出滑块 + 抓 `VerifyCaptchaV2` 回包）。
 
 ---
 
